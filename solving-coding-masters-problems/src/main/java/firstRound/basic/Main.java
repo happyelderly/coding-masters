@@ -1,4 +1,4 @@
-package jop.posting;
+package firstRound.basic;
 
 public class Main {
 
