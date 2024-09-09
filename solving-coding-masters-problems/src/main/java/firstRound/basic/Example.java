@@ -1,4 +1,4 @@
-package jop.posting;
+package firstRound.basic;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -14,7 +14,7 @@ public class Example {
 
     public static void main(String[] args) throws IOException {
         Example main = new Example();
-        var br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bf = new BufferedWriter(new OutputStreamWriter(System.out));
         int n = Integer.parseInt(br.readLine());
         int answer = main.solution(n);
