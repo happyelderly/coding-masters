@@ -56,7 +56,7 @@ if a>1:
                 q=l[n-1][i][j]
                 w=l[n-1][i-1][j] if (i-1)>=0 else 0
                 e=l[n-1][i][j-1] if (j-1)>=0 else 0
-                l[n][i][j] = q+w+e
+                l[n][i][j]=q+w+e
 for i in range(a):
     print(' '.join(map(str,l[a-1][i][:a-i])))
 #초급-26.오리 농법
@@ -69,23 +69,25 @@ for i in range(n):
         for k in range(n):
             l[k][i]='0' if l[k][i]=='2' else l[k][i]
 print(sum([r.count('2') for r in l]))
-#초급-27.분수를 소수로 ======================================================================test(3/5)
+#초급-27.분수를 소수로
 a,b=map(int,input().split())
-n =int(input())
-l=[a//b]
-for i in range(n+1):
-    a=(a%b)*10
-    l.append(int(a//b))
-if l[-1]>=5:
-    l[-2] = l[-2]+1
-l=l[:-1]
-for i in range(len(l)):
-    if l[-(i+1)]==10:
-        l[-(i+2)] = l[-(i+2)]+1
-        l=l[:-1]
-    else: break
-s=str(l[0])+'.'+''.join(map(str,l[1:]))
-print(s)
+n=int(input())
+r=a//b
+l=a%b
+s=[r]
+for _ in range(n+1):
+    l*=10
+    d=l//b
+    s.append(d)
+    l%=b
+if s[-1]>=5:
+    s[-2]=s[-2]+1
+s=s[:-1]
+for i in range(1,n+1):
+    if s[-i]==10:
+        s[-(i+1)]=s[-(i+1)]+1
+        s[-i] = 0
+print(str(s[0])+'.'+''.join(map(str,s[1:])) if len(s)>1 else str(s[0]))
 #초급-28.문서 통계
 i=input()
 print(len(i))
