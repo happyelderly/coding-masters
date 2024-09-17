@@ -1,5 +1,13 @@
 #########################################  Python #################################################
-#중급-31. 
+#중급-31. 예쁜수
+n=input()
+tmp=False
+for i in range(0,len(n)):
+    for j in range(i+1,len(n)):
+        if int(n)%int(n[i:j])==0:
+            tmp=True
+    if tmp: break
+print('YES' if tmp else 'NO')
 #중급-32. 
 #중급-33. 
 #중급-34. 
