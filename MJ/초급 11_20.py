@@ -56,18 +56,51 @@ a=int(input())
 for i in range(6):
     if d[i%6]+d[(a-i-2)%6]==a:
         print(str(d[i%6])+' '+str(d[(a-i-2)%6]))
-#초급-20. ===========================================================================test(0/5)
-l=[]
-for i in range((n:=int(input()))):
-    a,b=map(int,input().split())
-    l.append((i,a,b))
-l = sorted(l,key=lambda x:(x[1],x[2]),reverse=True)
-s=[1]*n
-t=0
-for i in range(1,n):
-    if (l[t][2]<l[i][2]) or ((l[t][2]==l[i][2]) and (l[t][1]==l[i][1])):
-        s[l[i][0]]=t+1
+#초급-20. 신입사원 채용
+n=int(input())
+l=[(i,*map(int, input().split())) for i in range(n)]
+r=set()
+for i in range(n):
+    for j in range(i+1,n):
+        if (l[i][1]<l[j][1] and l[i][2] > l[j][2]) or (l[i][1]>l[j][1] and l[i][2]<l[j][2]):
+            r.add((i,j))
+gr = []
+for a,b in r:
+    mg = []
+    for g in gr:
+        if a in g or b in g:
+            mg.append(g)
+    if mg:
+        ng=set().union(*mg,{a,b})
+        gr=[g for g in gr if g not in mg]
+        gr.append(ng)
     else:
-        t=i
-        s[l[i][0]]=t+1
-print(' '.join(map(str,s)))
+        gr.append(set([a,b]))
+Al=sorted(set(range(n))-{i for g in gr for i in g})
+Bl=[sorted(g) for g in gr]
+bl=[i[0] for i in Bl]
+fl=Al+bl
+fli=[(i,l[i][1],l[i][2]) for i in fl]
+fls=sorted(fli,key=lambda x:(x[1],x[2]),reverse=True)
+t=[x[0] for x in fls]
+rk=[0]*n
+cr=1
+rk=[0]*n
+for i in range(len(fls)):
+    if i>0 and fls[i][1]==fls[i-1][1] and fls[i][2]==fls[i-1][2]:
+        rk[fls[i][0]]=rk[fls[i-1][0]] 
+    else:
+        rk[fls[i][0]]=cr  
+        cr+=1
+for g in Bl:
+    grk=rk[g[0]]
+    for idx in g:
+        rk[idx]=grk
+frk=[0]*n
+tmp=1
+for i in range(1,n+1):
+    for j in range(1,n+1):
+        if rk[j-1]==i:
+            frk[j-1]=tmp
+    tmp += rk.count(i)
+print(' '.join(map(str,frk)))
