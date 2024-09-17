@@ -1,0 +1,27 @@
+import java.io.*;
+
+import java.util.*; 
+
+public class Main {
+    public static void main(String[] args) throws IOException { 
+
+        Scanner scanner = new Scanner(System.in); 
+
+        int a = scanner.nextInt(); 
+
+        int b = scanner.nextInt(); 
+        
+        int n = scanner.nextInt();
+        
+        int result;
+        
+        if((n-b)%(a-b)!=0){
+            result = (n-b)/(a-b) + 1;
+        }else{
+            result = (n-b)/(a-b);
+        }
+
+        System.out.println(result); 
+
+    }
+}
