@@ -166,4 +166,55 @@ for k in m:
         print(2)
     else:
         print(0)
-#중급-40. 테트로미노
+#중급-40. 테트로미노 =============================================================================================================test(4/5)
+import sys
+l=[]
+u=[['####'],['##','##'],['###','#..'],['##.','.##'],['###','.#.']]
+for _ in range(5):
+    l.append([i for i in input()])
+r=[[0]*5 for _ in range(5)]
+tmp=False
+for i in range(5):
+    for j in range(5):
+        if l[i][j]=='#':
+            x,y=i,j
+            tmp=True
+            break
+    if tmp:break
+d=[(-1,0),(1,0),(0,1),(0,-1)]
+w=[(x,y)]
+q=[(x,y)]
+r[x][y]=1
+while q!=[]:
+    sx,sy=q[0]
+    del q[0]
+    for dx,dy in d:
+        nx,ny=sx+dx,sy+dy
+        if 0<=nx<5 and 0<=ny<5 and l[nx][ny]=='#' and r[nx][ny]==0:
+            q.append((nx,ny))
+            w.append((nx,ny))
+            r[nx][ny]=1
+if len(w)!=4: print('NO'); sys.exit()
+min_x=min(w,key=lambda t:t[0])[0]
+max_x= max(w,key=lambda t:t[0])[0]
+min_y=min(w,key=lambda t:t[1])[1]
+max_y=max(w,key=lambda t:t[1])[1]
+array=[['.' for _ in range(min_y,max_y+1)] for _ in range(min_x,max_x+1)]
+for x, y in w:
+    array[x-min_x][y-min_y]='#'
+c=[]
+for r in array:
+    c.append(''.join(r))
+for _ in range(4):
+    if c in u:
+        print('YES')
+        sys.exit()
+    c=[''.join(r) for r in zip(*c[::-1])]
+r=[row[::-1] for row in array]
+rc=[''.join(row) for row in r]
+for _ in range(4):
+    if rc in u:
+        print('YES')
+        sys.exit()
+    rc=[''.join(r) for r in zip(*rc[::-1])]
+print('NO')

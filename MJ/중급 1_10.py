@@ -1,5 +1,28 @@
 #########################################  Python #################################################
-#중급-1. 태국 택시
+#중급-1. 태국 택시 (크루스칼 알고리즘 공부:'https://techblog-history-younghunjo1.tistory.com/262')
+n,m=map(int,input().split())
+l=[tuple(map(int,input().split())) for _ in range(m)]
+l.sort(key=lambda x:x[2])
+d=[i for i in range(n+1)]
+def f(di,x):
+    if di[x]!=x:
+        di[x]=f(di,di[x])
+    return di[x]
+def u(di,a,b):
+    a=f(di,a)
+    b=f(di,b)
+    if a<b:
+        di[b]=a
+    else:
+        di[a]=b
+e=[]
+tc=0
+for i in range(m):
+    a,b,c=l[i]
+    if f(d,a)!=f(d,b):
+        u(d,a,b)
+        tc+=c
+print(tc)
 #중급-2. 컴퓨터 학원
 n=int(input())
 d=[0]*(n+1)
@@ -17,7 +40,45 @@ for i in l:
     n%=i
 print(s if n==0 else '-1')
 #중급-4. 먹보 수민이
+n=int(input())
+l=[list(map(int,input().split())) for _ in range(n+1)]
+a,f=l[-1]
+l=l[:-1]
+s=0
+while f<a:
+    j=-1
+    tmp=0
+    for i in range(len(l)):
+        if l[i][0]<=f:
+            if l[i][1]>tmp:
+                tmp=l[i][1]
+                j=i
+    if j==-1:
+        s=-1
+        break
+    f+=tmp
+    del l[j]
+    s+=1
+print(s)
 #중급-5. 숫자 맞추기
+a,b=map(int,input().split())
+q=[(a,0)]
+d=[0]*100001
+while q!=[]:
+    n,c=q[0]
+    del q[0]
+    if n==b:
+        print(c)
+        break
+    if 0<=n+1<100001 and d[n+1]==0:
+        d[n+1]=1
+        q.append((n+1,c+1))
+    if 0<=n-1<100001 and d[n-1]==0:
+        q.append((n-1,c+1))
+        d[n-1]=1
+    if n%2==0 and 0<=n//2<100001 and d[n//2]==0:
+        q.append((n//2,c+1))
+        d[n//2]=1
 #중급-6. 약육강식
 n=int(input())
 l=list(map(int,input().split()))
@@ -53,7 +114,7 @@ for i in range(2,n):
     for j in range(1,i):
         d[i][j]=max(d[i-1][j-1],d[i-1][j])+l[i][j]
 print(max(d[-1]))
-#중급-9. 리버스 게임  -----------------------------(억지코딩)
+#중급-9. 리버스 게임  -------------(억지코딩)
 n=int(input())
 l=[[0 if i=='B' else 1 for i in input()] for _ in range(n)]
 s = sum(sum(r) for r in l)
@@ -86,3 +147,13 @@ while True:
         break
 print(m)
 #중급-10. 바닥 공사3
+n=int(input())
+if n%2!=0:
+    print(0)
+    exit()
+d=[0]*31
+d[0]=1
+d[2]=3
+for i in range(4,n+1,2):
+    d[i]+=d[i-2]*3+sum([d[j] for j in range(i-4,-1,-2)])*2
+print(d[n])

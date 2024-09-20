@@ -173,6 +173,21 @@ for i in range(nx+1):
 d.sort(key=lambda x:x[1])
 print(d[0][0] if x>0 else -d[0][0])
 #중급-29. 팰린드롬 만들기
+from itertools import permutations
+n=int(input())
+l=[(input()) for _ in range(n)]
+s=[]
+for i in permutations(l,n):
+    s.append(''.join(i))
+tmp=False
+for k in s:
+    for i in range(len(k)//2):
+        if k[i]!=k[-(i+1)]:
+            tmp=False
+            break
+        tmp=True
+    if tmp:break
+print('YES' if tmp else 'NO')
 #중급-30. 무차별 대입 공격
 from itertools import product
 _,k=map(int,input().split())
