@@ -45,7 +45,7 @@ elif a in ['5','6']:print(20)
 elif b=='ROKAF':print(28)
 elif c=='Y':print(28)
 else:print(32)
-#초급-25.파스칼 피라미드 ======================================================================test(1/5)
+#초급-25.파스칼 피라미드
 a=int(input())
 l=[[[0]*a for _ in range(a)] for _ in range(a)]
 l[0][0][0]=1
@@ -58,7 +58,7 @@ if a>1:
                 e=l[n-1][i][j-1] if (j-1)>=0 else 0
                 l[n][i][j]=q+w+e
 for i in range(a):
-    print(' '.join(map(str,l[a-1][i][:a-i])))
+    print(' '.join(map(str,l[a-1][i][:a-i]))+' ')
 #초급-26.오리 농법
 n=int(input())
 l=[input().split() for _ in range(n)]

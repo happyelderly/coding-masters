@@ -9,6 +9,15 @@ for i in range(0,len(n)):
     if tmp: break
 print('YES' if tmp else 'NO')
 #중급-32. 치팅 검사
+l=input()
+for i in range(len(l)):
+    f=l[:i]
+    b=l[i:]
+    if len(f)%2==0 and len(b)%2==0 and f[:len(f)//2]==f[len(f)//2:] and b[:len(b)//2]==b[len(b)//2:]:
+        print('YES')
+        print(f[:len(f)//2]+b[:len(b)//2])
+        exit()
+print('NO')
 #중급-33. 밑장 빼기
 n=int(input())
 l=list(map(int,input().split()))
@@ -93,6 +102,39 @@ while 'F' in l:
         del l[-(b+1):]
 print(s)
 #중급-38. 한줄 지우기 오목
+l=[]
+for _ in range(10):
+    l.append([i for i in input().strip()])
+def f(i,j,d,nl):
+    cnt=1
+    for dx,dy in d:
+        nx,ny=i+dx,j+dy
+        while 0<=nx<10 and 0<=ny<10 and nl[nx][ny]=='W':
+            nx,ny=nx+dx,ny+dy
+            cnt+=1
+    if cnt>=5:
+        return 1
+    return 0
+s=0
+for e in range(10):
+    for r in range(2):
+        nl=[t.copy() for t in l]
+        if r==0:
+            for j in range(10):
+                nl[e][j]='.'
+        else:
+            for j in range(10):
+                nl[j][e]='.'
+        for i in range(10):
+            for j in range(10):
+                if nl[i][j]=='.':
+                    nl[i][j]='W'
+                    for d in [[(1,0),(-1,0)],[(0,1),(0,-1)],[(1,1),(-1,-1)],[(1,-1),(-1,1)]]:
+                        if f(i,j,d,nl):
+                            s+=1
+                            break
+                    nl[i][j]='.'
+print(s)
 #중급-39. 도면 훑어보기
 n=int(input())
 m=[]
@@ -166,55 +208,43 @@ for k in m:
         print(2)
     else:
         print(0)
-#중급-40. 테트로미노 =============================================================================================================test(4/5)
-import sys
-l=[]
+#중급-40. 테트로미노
+l=[[i for i in input()] for _ in range(5)]
+if 4!=sum([r.count('#') for r in l]): print('NO'); exit()
 u=[['####'],['##','##'],['###','#..'],['##.','.##'],['###','.#.']]
-for _ in range(5):
-    l.append([i for i in input()])
-r=[[0]*5 for _ in range(5)]
-tmp=False
-for i in range(5):
-    for j in range(5):
-        if l[i][j]=='#':
-            x,y=i,j
-            tmp=True
-            break
-    if tmp:break
-d=[(-1,0),(1,0),(0,1),(0,-1)]
+for i,t in enumerate(l):
+    if '#' in t:
+        x,y=i,t.index('#')
+        break
 w=[(x,y)]
 q=[(x,y)]
-r[x][y]=1
 while q!=[]:
     sx,sy=q[0]
     del q[0]
-    for dx,dy in d:
+    for dx,dy in [(-1,0),(1,0),(0,1),(0,-1)]:
         nx,ny=sx+dx,sy+dy
-        if 0<=nx<5 and 0<=ny<5 and l[nx][ny]=='#' and r[nx][ny]==0:
+        if 0<=nx<5 and 0<=ny<5 and l[nx][ny]=='#' and (nx,ny) not in w:
             q.append((nx,ny))
             w.append((nx,ny))
-            r[nx][ny]=1
-if len(w)!=4: print('NO'); sys.exit()
-min_x=min(w,key=lambda t:t[0])[0]
-max_x= max(w,key=lambda t:t[0])[0]
-min_y=min(w,key=lambda t:t[1])[1]
-max_y=max(w,key=lambda t:t[1])[1]
-array=[['.' for _ in range(min_y,max_y+1)] for _ in range(min_x,max_x+1)]
+minx=min(w,key=lambda t:t[0])[0]
+maxx= max(w,key=lambda t:t[0])[0]
+miny=min(w,key=lambda t:t[1])[1]
+maxy=max(w,key=lambda t:t[1])[1]
+a=[['.' for _ in range(miny,maxy+1)] for _ in range(minx,maxx+1)]
 for x, y in w:
-    array[x-min_x][y-min_y]='#'
+    a[x-minx][y-miny]='#'
 c=[]
-for r in array:
+for r in a:
     c.append(''.join(r))
 for _ in range(4):
     if c in u:
         print('YES')
-        sys.exit()
-    c=[''.join(r) for r in zip(*c[::-1])]
-r=[row[::-1] for row in array]
-rc=[''.join(row) for row in r]
+        exit()
+    c=[''.join(e) for e in zip(*c[::-1])]
+r=c[::-1]
 for _ in range(4):
-    if rc in u:
+    if r in u:
         print('YES')
-        sys.exit()
-    rc=[''.join(r) for r in zip(*rc[::-1])]
+        exit()
+    r=[''.join(e) for e in zip(*r[::-1])]
 print('NO')

@@ -1,5 +1,36 @@
 #########################################  Python #################################################
 #중급-21. 아티스트 재승
+k=[i for i in input()]
+n,m=map(int,input().split())
+l=[[i for i in input()] for _ in range(n)]
+d=[(-1,0),(1,0),(0,1),(0,-1)]
+q=[]
+nd=0
+for i in range(n):
+    for j in range(m):
+        if l[i][j]!='.': nd+=1
+        if l[i][j]==k[0]: q.append((i,j))
+if nd!=len(k):
+    print(0)
+    exit()
+r=0
+for s in q:
+    sx,sy=s
+    u=[(sx,sy,1,[(sx,sy)])]
+    while u!=[]:
+        x,y,i,v=u[0]
+        del u[0]
+        if i==len(k):
+            r+=1
+            break
+        for dx,dy in d:
+            nx,ny=x+dx,y+dy
+            if 0<=nx<n and 0<=ny<m:
+                if l[nx][ny]==k[i] and (nx,ny) not in v:
+                    nv=v.copy()
+                    nv.append((nx,ny))
+                    u.append((nx,ny,i+1,nv))
+print(r)
 #중급-22. 순환소수
 p,q=map(int,input().split())
 l=p//q
