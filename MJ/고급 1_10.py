@@ -113,7 +113,38 @@ for k,v in nd:
                 break
 #print(len(g.keys()))
 print(len(g.keys()) if len(g.keys())!=13 else 12)
-#고급-6.막사 정찰 (최대 유량(Flow) 알고리즘)
+#고급-6.막사 정찰 ---------------------------------------------------------------test(0/5)
+n,m=map(int,input().split())
+l=[list(map(int,input().split())) for _ in range(m)]
+d={i:[] for i in range(n+1)}
+for s,e in l:
+    if s!=1 and e!=1 and s!=2 and e!=2:
+        d[s].append(e)
+        d[e].append(s)
+    elif s==1 or e==1:
+        d[1].append(e if s==1 else s)
+    elif s==2 or e==2:
+        d[s if e==2 else e].append(2)
+w=[]
+def a(x,q):
+    if x==2:
+        w.append(q[1:-1])
+        return
+    for r in d[x]:
+        if r not in q:
+            q.append(r)
+            a(r,q)
+            q.pop()
+a(1,[1])
+w.sort(key=lambda x:len(x))
+
+c=0
+r=[]
+for a in w:
+    if len(set(r)&set(a))==0:
+        r.extend(a)
+        c+=1
+print(c)
 #고급-7.오디세우스의 모험
 n,m=map(int,input().split())
 l=[list(map(int,input().split())) for _ in range(m)]
@@ -168,3 +199,41 @@ for k in range(x,1,-1):
                 print(k**2)
                 exit()
 #고급-10.부메랑 제작
+n,m=map(int,input().split())
+l=[list(map(int,input().split())) for _ in range(n)]
+b=[[(-1,0),(0,-1)],[(-1,0),(0,1)],[(1,0),(0,-1)],[(1,0),(0,1)]]
+maxs=0
+v=[[0]*m for _ in range(n)]
+def a(x,y,cs):
+    global maxs
+    if y==m:
+        x+=1
+        y=0
+    if x==n:
+        if cs>maxs:
+            maxs=cs
+        return
+    if v[x][y]:
+        a(x,y+1,cs)
+    else:
+        a(x,y+1,cs)
+        for d in b:
+            p=[(x,y)]
+            tmp=True
+            ts=l[x][y]*2
+            for dx,dy in d:
+                nx,ny=x+dx,y+dy
+                if 0<=nx<n and 0<=ny<m and v[nx][ny]!=1:
+                    p.append((nx,ny))
+                    ts+=l[nx][ny]
+                else:
+                    tmp=False
+                    break
+            if tmp:
+                for px,py in p:
+                    v[px][py]=1
+                a(x,y+1,cs+ts)
+                for px,py in p:
+                    v[px][py]=0
+a(0,0,0)
+print(maxs)

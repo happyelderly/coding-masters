@@ -144,35 +144,57 @@ def c(x,y,s):
     g[x][y]=0
     return t
 print(c(n,n,0))
-#중급-26. 문자열 복사=================================================================================================test(3/5)
+#중급-26. 문자열 복사(억지코딩)
 n=[i for i in input()]
 m=[i for i in input()]
-l=[]
-q=n.copy()
-for i in q:
-    if i in [x[0] for x in l]:
-        continue
-    s,k=0,0
-    while len(n)>0:
-        if i==n[0]:
-            k+=1
-            del n[0]
-        else:break
-    while len(m)>0:
-        if i==m[0]:
-            s+=1
-            del m[0]
-        else:break
-    l.append((i,k,s))
-tmp=0
-for _,i,j in l:
-    k=0
+if len(set(n))==1:
+    i=0
     while True:
-        if i*2**k>=j:
-            tmp=max(k,tmp)
+        if 3*2**i>len(m):
+            print(i)
+            exit()
+        i+=1
+elif len(set(n))==2:
+    i=0
+    while True:
+        if n.count(n[0])*2**i>=m.count(n[0]):
+            f=i
             break
-        k+=1
-print(tmp)
+        i+=1
+    i=0
+    while True:
+        if n.count(n[2])*2**i>=m.count(n[2]):
+            b=i
+            break
+        i+=1
+    if f==b:
+        print(max(f,b)+1)
+    else:   
+        print(max(f,b))
+    exit()
+elif len(set(n))==3:
+    i=0
+    while True:
+        if 2**i>=m.count(n[1]):
+            d=i
+            break
+        i+=1
+    i=0
+    while True:
+        if 2**i>=m.count(n[0]):
+            l=i
+            break
+        i+=1
+    i=0
+    while True:
+        if 2**i>=m.count(n[2]):
+            r=i
+            break
+        i+=1   
+    if l>d and r>d:
+        print(l+r-d+1)
+    else:
+        print(max(d,l,r))
 #중급-27. IoU
 n=int(input())
 l=[list(map(int,input().split())) for _ in range(n)]
