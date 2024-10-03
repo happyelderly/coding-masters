@@ -113,38 +113,43 @@ for k,v in nd:
                 break
 #print(len(g.keys()))
 print(len(g.keys()) if len(g.keys())!=13 else 12)
-#고급-6.막사 정찰 ---------------------------------------------------------------test(0/5)
-n,m=map(int,input().split())
-l=[list(map(int,input().split())) for _ in range(m)]
-d={i:[] for i in range(n+1)}
-for s,e in l:
-    if s!=1 and e!=1 and s!=2 and e!=2:
-        d[s].append(e)
-        d[e].append(s)
-    elif s==1 or e==1:
-        d[1].append(e if s==1 else s)
-    elif s==2 or e==2:
-        d[s if e==2 else e].append(2)
-w=[]
-def a(x,q):
-    if x==2:
-        w.append(q[1:-1])
-        return
-    for r in d[x]:
-        if r not in q:
-            q.append(r)
-            a(r,q)
-            q.pop()
-a(1,[1])
-w.sort(key=lambda x:len(x))
-
-c=0
-r=[]
-for a in w:
-    if len(set(r)&set(a))==0:
-        r.extend(a)
-        c+=1
-print(c)
+#고급-6.막사 정찰
+n,p=map(int, input().split())
+l=[tuple(map(int, input().split())) for _ in range(p)]
+s=1
+e=2
+d=[[] for _ in range(n+1)]
+for u,v in l:
+    d[u].append(v)
+    d[v].append(u)
+cnt=0
+u=[0]*(n+1)
+while True:
+    q=[s]
+    p=[0]*(n+1)
+    f=False
+    while q:
+        c=q[0]
+        del q[0]
+        for k in d[c]:
+            if k==e:
+                p[k]=c
+                f=True
+                break
+            if u[k]==0 and p[k]==0:
+                p[k]=c
+                q.append(k)
+        if f: break
+    if not f: break
+    w=[]
+    o=p[e]
+    while o!=s:
+        w.append(o)
+        o=p[o]
+    cnt+=1
+    for h in w:
+        u[h]=True
+print(cnt)
 #고급-7.오디세우스의 모험
 n,m=map(int,input().split())
 l=[list(map(int,input().split())) for _ in range(m)]
