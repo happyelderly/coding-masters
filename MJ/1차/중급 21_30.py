@@ -195,6 +195,43 @@ elif len(set(n))==3:
         print(l+r-d+1)
     else:
         print(max(d,l,r))
+
+#======================================================================================================
+def ceil(x, y):
+    t = 0
+    while x < y:
+        x *= 2
+        t += 1
+    
+    return t
+    
+
+S1 = input()
+S2 = input()
+
+S1_unique = []
+for c in S1:
+    if c not in S1_unique:
+        S1_unique.append(c)
+
+n = len(S1_unique)
+
+if n == 1:
+    a = ceil(len(S1), len(S2))
+    print(a)
+elif n == 2:
+    a = ceil(S1.count(S1_unique[0]), S2.count(S1_unique[0]))
+    b = ceil(S1.count(S1_unique[1]), S2.count(S1_unique[1]))
+    print(max(a, b) + 1)
+else:
+    a = ceil(1, S2.count(S1_unique[0]))
+    b = ceil(1, S2.count(S1_unique[1]))
+    c = ceil(1, S2.count(S1_unique[2]))
+    
+    if a > b and c > b:
+        print(a + c - b + 1)
+    else:
+        print(max(a, b, c))
 #중급-27. IoU
 n=int(input())
 l=[list(map(int,input().split())) for _ in range(n)]
