@@ -113,6 +113,35 @@ for k,v in nd:
                 break
 #print(len(g.keys()))
 print(len(g.keys()) if len(g.keys())!=13 else 12)
+
+#===================================================================================================
+from collections import defaultdict
+def can_kill(a, b): 
+    return all(a[i] >= b[i] for i in range(3))
+n = int(input())
+movies = [list(map(int, input().split())) for _ in range(n)]
+killing = defaultdict(list)
+for i in range(n):
+    for j in range(n):
+        if i != j and can_kill(movies[i], movies[j]):
+            killing[i].append(j)
+
+for i in range(len(killing)):
+    killing[i] = sorted(killing[i], key = lambda x: sum(movies[x]))
+killing = sorted(killing.items(), key = lambda x: len(x[1]))
+killed = set()
+
+for k, v in killing:
+    cnt = 0
+    for i in v:
+        if cnt == 2:
+            break
+        if i in killed:
+            continue
+        killed.add(i)
+        cnt += 1
+print(n - len(killed))
+
 #고급-6.막사 정찰
 n,p=map(int, input().split())
 l=[tuple(map(int, input().split())) for _ in range(p)]
