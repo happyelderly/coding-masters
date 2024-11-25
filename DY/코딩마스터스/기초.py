@@ -14,6 +14,8 @@ a,b,c=map(int,input().split())
 print(a+(b*(c-1)))
 
 #4 8진수와 16진수
+n=int(input())
+print(oct(n)[2:], hex(n)[2:].upper())
 
 #5 아이디 만들기
 a = input()
@@ -52,14 +54,41 @@ else:
     print('F')
     
 #10 기억상실
-a, b, c = map(int, input().split())
-print((c-a)//(a-b)+1)
+a,b,n = map(int,input().split())
+print((n-a//a-b)+1)
 
 #11 림보게임
+n=int(input())
+a=map(int,input().split())
+
+und=[]
+for h in a:
+    if h <= 160:
+        und.append(h)
+        
+if und == []:
+    print('P')
+else:
+    print('I', und[0])
 
 #12 아까운 쿠폰
+a=int(input())
+coupon=[50000, 10000, 5000, 1000, 500, 100, 50, 10]
+c=0
+for i in coupon:
+    c+=a//i
+    a=a%i
+print(c)
 
 #13 우리반 아이큐왕은
+n=int(input())
+IQ=[]
+for i in range(n):
+    IQ.append(input().split())
+IQ.sort(key=lambda x:-int(x[1]))
+print(IQ[0][0],
+    IQ[1][0],
+    IQ[2][0], sep='\n')
 
 #14 10배
 print(int(input())*10)
@@ -77,6 +106,18 @@ print(int(input())//16)
 print(int(input())**2*3.14)
 
 #19 최대공약수
+a,b = map(int,input().split())
+for i in range(1,a+1):
+    if (a%i==0) & (b%i==0):
+        c = i
+print(c)
 
 #20 소수 구하기
-
+a=int(input())
+count=a-1
+for i in range(1, a+1):
+    for j in range(2, i):
+        if i % j == 0:
+            count -= 1
+            break
+print(count)
