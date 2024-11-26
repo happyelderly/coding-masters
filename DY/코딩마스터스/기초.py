@@ -17,6 +17,11 @@ print(a+(b*(c-1)))
 n=int(input())
 print(oct(n)[2:], hex(n)[2:].upper())
 
+# int('n', 현재 진수): 10진수로 변환해주는 함수
+# bin(): 2진수로 변환
+# oct(): 8진수로 변환
+# hex(): 16진수로 변환 
+
 #5 아이디 만들기
 a = input()
 if len(a) < 20:
@@ -55,7 +60,8 @@ else:
     
 #10 기억상실
 a,b,n = map(int,input().split())
-print((n-a//a-b)+1)
+print(((n-b)//(a-b))+1)
+#print(((n-a)//(a-b))+1)
 
 #11 림보게임
 n=int(input())
@@ -70,6 +76,9 @@ if und == []:
     print('P')
 else:
     print('I', und[0])
+    
+# 빈 리스트를 선언하고 160보다 작은 값이 있으면 추가(append)
+# 맨 처음 실패하는 높이를 출력해야하므로 und가 아니라 und[0]
 
 #12 아까운 쿠폰
 a=int(input())
@@ -96,6 +105,12 @@ print(int(input())*10)
 #15 You
 print('Me'if input()=='You'else 'No')
 
+# a=input()
+# if a=='You':
+#     print('Me')
+# else:
+#     print('No')
+
 #16 3으로 나눈 나머지
 print(int(input())%3)
 
@@ -112,6 +127,9 @@ for i in range(1,a+1):
         c = i
 print(c)
 
+# import math
+# math.gcd(a, b)
+
 #20 소수 구하기
 a=int(input())
 count=a-1
@@ -121,3 +139,12 @@ for i in range(1, a+1):
             count -= 1
             break
 print(count)
+
+# a=int(input())
+# count=0
+# for i in range(1, a+1):
+#     for j in range(2, i):
+#         if i % j == 0:
+#             count += 1
+#             break
+# print(a-count-1)
